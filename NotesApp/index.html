@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/home.css" />
+    <link rel="icon" type="image/x-icon" href="/assests/favicon.png" />
+    <title>Notes App</title>
+  </head>
+  <body>
+    <header>
+      <div class="page-title">
+        <p class="main-page-title">Notes App</p>
+        <p class="header-info">Take Notes and never forget</p>
+      </div>
+      <div class="search-sort-div-p">
+        <div class="search-sort-div">
+          <input id="searchBar" type="text" placeholder="Fliter notes" />
+          <select id="select">
+            <option selected>Sort By</option>
+            <option id="alphabetically" value="Sort by alphabetically">
+              Sort by alphabetically
+            </option>
+            <option id="lastEdited" value="Sort by last edited">
+              Sort by last edited
+            </option>
+            <option id="recentlyCreated" value="Sort by recently created">
+              Sort by recently created
+            </option>
+          </select>
+        </div>
+      </div>
+    </header>
+    <div class="main-content" id="mainContent">
+      <p>No notes to Show</p>
+    </div>
+    <div class="controls">
+      <a href="edit.html"><button id="createBTN">Create Notes</button></a>
+    </div>
+    <script src="/home.js"></script>
+  </body>
+</html>
