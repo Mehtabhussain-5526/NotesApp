@@ -18,26 +18,21 @@ if (fetchedID) {
   title.value = displayData[toShowID].title;
   discription.value = displayData[toShowID].discription;
 }
-// Update log Assingnment.
-let updateLog = 0;
+let olddate;
 if (fetchedID) {
-  updateLog = displayData[editIndex].update;
-} else {
-  updateLog = 0;
+  olddate = displayData[editIndex].date;
 }
+console.log(olddate);
 // Updation
 function dataUpdating() {
-  if (fetchedID) {
-    updateLog++;
-  }
   let date = Date.now();
   let instance = {
     id: Math.random(),
     title: title.value,
     discription: discription.value,
-    date: date,
+    date: olddate,
     status: theStatus,
-    update: updateLog,
+    update: date,
   };
   displayData.splice(editIndex, 1, instance);
   localStorage.setItem("data", JSON.stringify(displayData));
@@ -54,7 +49,7 @@ function dataStoring() {
     discription: discription.value,
     date: date,
     status: theStatus,
-    update: updateLog,
+    update: 0,
   };
   dataParse.push(instance);
   localStorage.setItem("data", JSON.stringify(dataParse));
@@ -89,24 +84,23 @@ document.getElementById("home-li").addEventListener("click", (e) => {
 
 // Date && time Setup
 let dateEx;
-let creatOrupdate;
+let updateInform = displayData[editIndex].update;
 if (!fetchedID) {
   dateEx = Date.now();
-  creatOrupdate = "Created";
 } else {
   dateEx = displayData[editIndex].date;
-  creatOrupdate = "Edited";
 }
-let dateCurrent = Date.now();
-let miliseconds = dateCurrent - dateEx;
-let seconds = Math.floor(miliseconds / 1000);
-let minutes = Math.floor(seconds / 60);
-let hours = Math.floor(minutes / 60);
-let days = Math.floor(hours / 24);
-let weeks = Math.floor(days / 7);
-let months = Math.floor(days / 30);
-let years = Math.floor(days / 365);
-if (updateLog) {
+
+if (updateInform != 0) {
+  let dateCurrent = Date.now();
+  let miliseconds = dateCurrent - updateInform;
+  let seconds = Math.floor(miliseconds / 1000);
+  let minutes = Math.floor(seconds / 60);
+  let hours = Math.floor(minutes / 60);
+  let days = Math.floor(hours / 24);
+  let weeks = Math.floor(days / 7);
+  let months = Math.floor(days / 30);
+  let years = Math.floor(days / 365);
   if (seconds >= 0 && seconds < 60) {
     theStatus = "Edited a few seconds ago";
   } else if (seconds > 60 && minutes < 60) {
@@ -121,6 +115,15 @@ if (updateLog) {
     theStatus = "Edited " + years + " years ago";
   }
 } else {
+  let dateCurrent = Date.now();
+  let miliseconds = dateCurrent - dateEx;
+  let seconds = Math.floor(miliseconds / 1000);
+  let minutes = Math.floor(seconds / 60);
+  let hours = Math.floor(minutes / 60);
+  let days = Math.floor(hours / 24);
+  let weeks = Math.floor(days / 7);
+  let months = Math.floor(days / 30);
+  let years = Math.floor(days / 365);
   if (seconds >= 0 && seconds < 60) {
     theStatus = "Created a few seconds ago";
   } else if (seconds > 60 && minutes < 60) {

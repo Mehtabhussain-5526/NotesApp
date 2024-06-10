@@ -11,10 +11,10 @@ function rendering() {
       let sTitle = data[i].title;
       let updateinfo = data[i].update;
       let dateEx = data[i].date;
-      if (updateinfo) {
+      if (updateinfo != 0) {
         let subStatus;
         let dateCurrent = Date.now();
-        let miliseconds = dateCurrent - dateEx;
+        let miliseconds = dateCurrent - updateinfo;
         let seconds = Math.floor(miliseconds / 1000);
         let minutes = Math.floor(seconds / 60);
         let hours = Math.floor(minutes / 60);
@@ -91,7 +91,7 @@ rendering();
 // Sorter
 document.getElementById("select").addEventListener("change", (e) => {
   if (e.target.value == "Sort by recently created") {
-    data = data.reverse();
+    data.sort((a, b) => b.date - a.date);
   }
   if (e.target.value == "Sort by alphabetically") {
     data.sort((a, b) => {
@@ -107,17 +107,7 @@ document.getElementById("select").addEventListener("change", (e) => {
     });
   }
   if (e.target.value == "Sort by last edited") {
-    data.sort((a, b) => {
-      const updateA = a.update;
-      const updateB = b.update;
-      if (updateA > updateB) {
-        return -1;
-      }
-      if (updateA < updateB) {
-        return 1;
-      }
-      return 0;
-    });
+    data.sort((a, b) => b.update - a.update);
   }
   rendering();
 });
@@ -136,10 +126,10 @@ function searching() {
       let statusToShow;
       let statusSearched = searchData[i].update;
       let dateEx = searchData[i].date;
-      if (statusSearched) {
+      if (statusSearched != 0) {
         let subStatus;
         let dateCurrent = Date.now();
-        let miliseconds = dateCurrent - dateEx;
+        let miliseconds = dateCurrent - statusSearched;
         let seconds = Math.floor(miliseconds / 1000);
         let minutes = Math.floor(seconds / 60);
         let hours = Math.floor(minutes / 60);
