@@ -84,11 +84,13 @@ document.getElementById("home-li").addEventListener("click", (e) => {
 
 // Date && time Setup
 let dateEx;
-let updateInform = displayData[editIndex].update;
+let updateInform;
 if (!fetchedID) {
   dateEx = Date.now();
+
 } else {
   dateEx = displayData[editIndex].date;
+  updateInform = displayData[editIndex].update;
 }
 
 if (updateInform != 0) {
@@ -121,7 +123,6 @@ if (updateInform != 0) {
   let minutes = Math.floor(seconds / 60);
   let hours = Math.floor(minutes / 60);
   let days = Math.floor(hours / 24);
-  let weeks = Math.floor(days / 7);
   let months = Math.floor(days / 30);
   let years = Math.floor(days / 365);
   if (seconds >= 0 && seconds < 60) {
