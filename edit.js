@@ -5,10 +5,12 @@ const fetchedID = pageOneData.get("id");
 const dataAvail = localStorage.getItem("data");
 const displayData = JSON.parse(dataAvail);
 let theStatus;
+// Existing Title.
 if (!displayData) {
   let newData = [];
   localStorage.setItem("data", JSON.stringify(newData));
 }
+// Finding Index to Make new Changes.
 let editIndex;
 if (fetchedID) {
   let toShowID = displayData.findIndex((x) => x.id == fetchedID);
@@ -16,8 +18,18 @@ if (fetchedID) {
   title.value = displayData[toShowID].title;
   discription.value = displayData[toShowID].discription;
 }
+// Update log Assingnment.
+let updateLog = 0;
+if (fetchedID) {
+  updateLog = displayData[editIndex].update;
+} else {
+  updateLog = 0;
+}
 // Updation
 function dataUpdating() {
+  if (fetchedID) {
+    updateLog++;
+  }
   let date = Date.now();
   let instance = {
     id: Math.random(),
@@ -25,6 +37,7 @@ function dataUpdating() {
     discription: discription.value,
     date: date,
     status: theStatus,
+    update: updateLog,
   };
   displayData.splice(editIndex, 1, instance);
   localStorage.setItem("data", JSON.stringify(displayData));
@@ -41,6 +54,7 @@ function dataStoring() {
     discription: discription.value,
     date: date,
     status: theStatus,
+    update: updateLog,
   };
   dataParse.push(instance);
   localStorage.setItem("data", JSON.stringify(dataParse));
@@ -75,10 +89,13 @@ document.getElementById("home-li").addEventListener("click", (e) => {
 
 // Date && time Setup
 let dateEx;
+let creatOrupdate;
 if (!fetchedID) {
   dateEx = Date.now();
+  creatOrupdate = "Created";
 } else {
   dateEx = displayData[editIndex].date;
+  creatOrupdate = "Edited";
 }
 let dateCurrent = Date.now();
 let miliseconds = dateCurrent - dateEx;
@@ -89,20 +106,35 @@ let days = Math.floor(hours / 24);
 let weeks = Math.floor(days / 7);
 let months = Math.floor(days / 30);
 let years = Math.floor(days / 365);
-if (seconds >= 0 && seconds < 60) {
-  theStatus = "Edited a few seconds ago";
-} else if (seconds > 60 && minutes < 60) {
-  theStatus = "Edited " + minutes + " minutes ago";
-} else if (minutes > 60 && hours < 24) {
-  theStatus = "Edited " + hours + " hours ago";
-} else if (hours > 24 && days < 30) {
-  theStatus == "Edited " + days + " days ago";
-} else if (days > 30 && months < 12) {
-  theStatus = "Edited " + months + " months ago";
-} else if (months > 12) {
-  theStatus = "Edited " + years + " years ago";
+if (updateLog) {
+  if (seconds >= 0 && seconds < 60) {
+    theStatus = "Edited a few seconds ago";
+  } else if (seconds > 60 && minutes < 60) {
+    theStatus = "Edited " + minutes + " minutes ago";
+  } else if (minutes > 60 && hours < 24) {
+    theStatus = "Edited " + hours + " hours ago";
+  } else if (hours > 24 && days < 30) {
+    theStatus = "Edited " + days + " days ago";
+  } else if (days > 30 && months < 12) {
+    theStatus = "Edited " + months + " months ago";
+  } else if (months > 12) {
+    theStatus = "Edited " + years + " years ago";
+  }
+} else {
+  if (seconds >= 0 && seconds < 60) {
+    theStatus = "Created a few seconds ago";
+  } else if (seconds > 60 && minutes < 60) {
+    theStatus = "Created " + minutes + " minutes ago";
+  } else if (minutes > 60 && hours < 24) {
+    theStatus = "Created " + hours + " hours ago";
+  } else if (hours > 24 && days < 30) {
+    theStatus == "Created " + days + " days ago";
+  } else if (days > 30 && months < 12) {
+    theStatus = "Created " + months + " months ago";
+  } else if (months > 12) {
+    theStatus = "Created " + years + " years ago";
+  }
 }
-if(fetchedID){
+if (fetchedID) {
   document.getElementById("edited-status").innerText = theStatus;
 }
-
