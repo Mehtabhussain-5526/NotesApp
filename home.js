@@ -85,6 +85,12 @@ function rendering() {
       });
     }
   }
+  if(data.length===0){
+    let np = document.createElement("p");
+    np.textContent="No notes to Show";
+    np.style="margin-bottom:15px";
+    parentDiv.appendChild(np);
+  }
 }
 rendering();
 
